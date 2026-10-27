@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Топонимы Магаданской области</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { height: 100vh; width: 100%; }
+        .popup-title { font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+        .popup-lang { color: #666; font-size: 12px; font-style: italic; }
+        /* Скрываем флаг Leaflet (если он вас смущает) */
+        .leaflet-attribution-flag { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    var map = L.map('map').setView([59.5638, 150.8035], 5);
+
+    // Карта OpenStreetMap — заработает после загрузки на GitHub
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    var toponyms = [
+        [59.5638, 150.8035, "Магадан", "эвенкийский?", "По одной из версий — «наносы моря» (монгдан)"],
+        [62.7833, 148.1500, "Сусуман", "якутский", "От «сусуман» — «быстрина, стремительная вода»"],
+        [63.0500, 147.1833, "Омсукчан", "эвенкийский", "От «омсукчан» — «небольшое озеро»"],
+        [61.9167, 149.8000, "Сеймчан", "эвенкийский", "От «сэйм» — «яма, котловина»"],
+        [59.0833, 151.1333, "Ола", "эвенкийский", "От «ола» — «рыба» (или «место рыбной ловли»)"],
+        [60.3667, 152.4667, "Омчак", "эвенкийский", "От «омчак» — «медведь»"],
+        [62.5333, 155.8000, "Эвенск", "эвенский", "Название по народу эвены"]
+    ];
+
+    toponyms.forEach(function(item) {
+        var popupContent =
+            '<div class="popup-title">' + item[2] + '</div>' +
+            '<div class="popup-lang">' + item[3] + '</div>' +
+            '<div>' + item[4] + '</div>';
+
+        L.marker([item[0], item[1]])
+            .addTo(map)
+            .bindPopup(popupContent);
+    });
+</script>
+
+</body>
+</html>
